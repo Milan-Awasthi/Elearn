@@ -14,6 +14,11 @@ provider "azurerm" {
 resource "azurerm_resource_group" "akhi_rg1" {
   name     = "akhi_rg1"
   location = "Central India"
+}
+
+resource "azurerm_resource_group" "milan_rg1" {
+  name     = "milan_rg1"
+  location = "westus"
 
 }
 resource "azurerm_virtual_network" "vnet_Milan" {
