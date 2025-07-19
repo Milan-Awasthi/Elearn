@@ -24,18 +24,10 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    backendServiceArm: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
-    backendAzureRmResourceGroupName: 'milanrg'
-    backendAzureRmStorageAccountName: 'milanstg'
-    backendAzureRmContainerName: 'container'
-    backendAzureRmKey: 'terraform.tfstate'    
+
 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'apply -auto-approve'
-    backendServiceArm: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
-    backendAzureRmResourceGroupName: 'milanrg'
-    backendAzureRmStorageAccountName: 'milanstg'
-    backendAzureRmContainerName: 'container'
-    backendAzureRmKey: 'terraform.tfstate'
+ 
