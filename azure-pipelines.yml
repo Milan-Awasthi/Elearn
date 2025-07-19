@@ -24,10 +24,11 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-
-
+    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+ 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
-    command: 'apply -auto-approve'
- 
+    command: 'apply'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
