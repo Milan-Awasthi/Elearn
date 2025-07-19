@@ -5,6 +5,7 @@ trigger:
 pool:
   Milan_agent
 
+steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
