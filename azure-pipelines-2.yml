@@ -22,10 +22,11 @@ stages:
         provider: 'azurerm'
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
-        backendServiceArm: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+        backendAzureRmResourceGroupName: 'milan-rg'
         backendAzureRmStorageAccountName: 'milanstg'
         backendAzureRmContainerName: 'milancont'
         backendAzureRmKey: 'terraform.tfstate'
+        backendServiceArm: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
 
     - task: TerraformTaskV4@4
       displayName: 'Terraform Plan'
