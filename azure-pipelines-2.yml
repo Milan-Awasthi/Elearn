@@ -1,0 +1,30 @@
+trigger: 
+  -main
+pool: Milan_agent
+stages:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/C:\agent\_work\3\s'
+    backendAzureRmStorageAccountName: 'milanstg'
+    backendAzureRmContainerName: 'milancont'
+    backendAzureRmKey: '.tfstate'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)C:\agent\_work\3\s'
+    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+
+
+
+
