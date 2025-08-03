@@ -1,30 +1,45 @@
-trigger: 
-  -main
-pool: Milan_agent
+trigger:
+- main
+
+pool:
+  name: Milan_agent
+
 stages:
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: 'latest'
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/C:\agent\_work\3\s'
-    backendAzureRmStorageAccountName: 'milanstg'
-    backendAzureRmContainerName: 'milancont'
-    backendAzureRmKey: '.tfstate'
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)C:\agent\_work\3\s'
-    environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+- stage: TerraformDeployment
+  displayName: 'Terraform Deployment Stage'
+  jobs:
+  - job: TerraformJob
+    displayName: 'Run Terraform'
+    steps:
+    - task: TerraformInstaller@1
+      displayName: 'Install Terraform'
+      inputs:
+        terraformVersion: 'latest'
 
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        backendServiceArm: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+        backendAzureRmStorageAccountName: 'milanstg'
+        backendAzureRmContainerName: 'milancont'
+        backendAzureRmKey: 'terraform.tfstate'
 
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Plan'
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
 
-
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Apply'
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        environmentServiceNameAzureRM: 'Azure subscription 1(799b8ac2-95c2-49ae-bf18-9a3bf3936b19)'
+        allowTelemetryCollection: false
